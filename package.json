@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/app/server.ts",
+    "start": "NODE_ENV=development nodemon src/app/server.ts",
     "lint": "eslint . --ext .ts --fix"
   },
   "keywords": [],
