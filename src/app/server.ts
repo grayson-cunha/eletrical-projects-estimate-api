@@ -5,7 +5,9 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import '../config/database';
+import dbInit from '../database';
 
+dbInit();
 const app: express.Application = express();
 
 app.use(express.json());
