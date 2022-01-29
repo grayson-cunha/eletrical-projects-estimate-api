@@ -8,10 +8,10 @@ interface CustomerAttributes {
   phoneNumber?: string;
 }
 
-export interface IngredientInput extends Optional<CustomerAttributes, 'id'> {}
-export interface IngredientOuput extends Required<CustomerAttributes> {}
+export interface CustomerInput extends Optional<CustomerAttributes, 'id'> {}
+export interface CustomerOuput extends Required<CustomerAttributes> {}
 
-class Customer extends Model<CustomerAttributes, IngredientInput> implements CustomerAttributes {
+class Customer extends Model<CustomerAttributes, CustomerInput> implements CustomerAttributes {
   public id!: number;
   public name!: string;
   public areaCode!: string;
