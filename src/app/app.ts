@@ -5,11 +5,12 @@ dotenv.config();
 import express, { Application } from 'express';
 import cors from 'cors';
 import { Server } from 'http';
+import helmet from 'helmet';
+import compression from 'compression';
 
 import sequelizeConnection from '../config/database';
 import initializeDatabaseTables from '../database';
 import routes from './routes';
-import helmet from 'helmet';
 
 class App {
   private express: Application;
@@ -17,6 +18,7 @@ class App {
 
   constructor() {
     this.express = express();
+    this.express.use(compression());
     this.express.use(express.json());
     this.express.use(cors());
     this.express.use(helmet());
