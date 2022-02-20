@@ -9,6 +9,7 @@ import { Server } from 'http';
 import sequelizeConnection from '../config/database';
 import initializeDatabaseTables from '../database';
 import routes from './routes';
+import helmet from 'helmet';
 
 class App {
   private express: Application;
@@ -18,6 +19,7 @@ class App {
     this.express = express();
     this.express.use(express.json());
     this.express.use(cors());
+    this.express.use(helmet());
     this.express.use(routes);
   }
 
