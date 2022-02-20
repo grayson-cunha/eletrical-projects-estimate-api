@@ -59,7 +59,6 @@ describe('address controller: enpoints test', () => {
         city: 'Rio de Janeiro',
       });
 
-    console.log('PUT ', response.body);
     expect(response.status).toBe(200);
   });
 
@@ -77,8 +76,6 @@ describe('address controller: enpoints test', () => {
     const response = await supertest(app.getExpressInstance())
       .delete(`/addresses/${address.id}`)
       .send();
-
-    console.log(response.body);
 
     expect(response.status).toBe(204);
   });
