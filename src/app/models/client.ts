@@ -1,24 +1,27 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelizeConnection from '../../config/database';
 
-interface CustomerAttributes {
+interface ClientAttributes {
   id: number;
   name: string;
   areaCode: string;
   phoneNumber?: string;
 }
 
-export interface CustomerInput extends Optional<CustomerAttributes, 'id'> {}
-export interface CustomerOuput extends Required<CustomerAttributes> {}
+export interface ClientInput extends Optional<ClientAttributes, 'id'> {}
+export interface ClientOuput extends Required<ClientAttributes> {}
 
-class Customer extends Model<CustomerAttributes, CustomerInput> implements CustomerAttributes {
+class Client
+  extends Model<ClientAttributes, ClientInput>
+  implements ClientAttributes
+{
   public id!: number;
   public name!: string;
   public areaCode!: string;
   public phoneNumber!: string;
 }
 
-Customer.init(
+Client.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -43,4 +46,4 @@ Customer.init(
   }
 );
 
-export default Customer;
+export default Client;

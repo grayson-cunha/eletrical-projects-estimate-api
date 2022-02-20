@@ -1,9 +1,9 @@
-import Customer from '../app/models/customer';
+import Client from '../app/models/client';
 
 const isDev = process.env.NODE_ENV === 'development';
 
 const dbInit = () => {
-  Customer.sync({ alter: isDev });
+  Client.sync({ alter: isDev });
 };
 
 export default dbInit;
