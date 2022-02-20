@@ -1,6 +1,7 @@
-import supertest, { SuperTest, Test } from 'supertest';
-import app from '../../../src/app/app';
 import Address from '../../../src/app/models/address';
+import { testApi } from '../../test-request-helper';
+
+const addressEndpoint = '/addresses';
 
 beforeAll(async () => {
   await Address.sync({ force: true });
@@ -8,17 +9,15 @@ beforeAll(async () => {
 
 describe('address controller: enpoints test', () => {
   it('POST should return created address and status code 201', async () => {
-    const response = await supertest(app.getExpressInstance())
-      .post('/addresses')
-      .send({
-        address: 'test',
-        address2: 'APTO X',
-        number: '2',
-        district: 'Bairro X',
-        state: 'Minas Gerais',
-        city: 'Belo Horizonte',
-        cep: '30000000',
-      });
+    const response = await testApi(addressEndpoint, {
+      address: 'test',
+      address2: 'APTO X',
+      number: '2',
+      district: 'Bairro X',
+      state: 'Minas Gerais',
+      city: 'Belo Horizonte',
+      cep: '30000000',
+    }).post();
 
     expect(response.status).toBe(201);
   });
@@ -34,9 +33,7 @@ describe('address controller: enpoints test', () => {
       cep: '30000000',
     });
 
-    const response = await supertest(app.getExpressInstance())
-      .get(`/addresses/${address.id}`)
-      .send();
+    const response = await testApi(`${addressEndpoint}/${address.id}`).get();
 
     expect(response.status).toBe(200);
   });
@@ -52,12 +49,10 @@ describe('address controller: enpoints test', () => {
       cep: '30000000',
     });
 
-    const response = await supertest(app.getExpressInstance())
-      .put(`/addresses/${address.id}`)
-      .send({
-        state: 'Rio de Janeiro',
-        city: 'Rio de Janeiro',
-      });
+    const response = await testApi(`${addressEndpoint}/${address.id}`, {
+      state: 'Rio de Janeiro',
+      city: 'Rio de Janeiro',
+    }).put();
 
     expect(response.status).toBe(200);
   });
@@ -73,9 +68,7 @@ describe('address controller: enpoints test', () => {
       cep: '30000000',
     });
 
-    const response = await supertest(app.getExpressInstance())
-      .delete(`/addresses/${address.id}`)
-      .send();
+    const response = await testApi(`${addressEndpoint}/${address.id}`).delete();
 
     expect(response.status).toBe(204);
   });
