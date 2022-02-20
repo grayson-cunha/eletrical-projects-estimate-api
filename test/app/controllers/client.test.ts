@@ -1,6 +1,7 @@
 import supertest, { SuperTest, Test } from 'supertest';
-import app from '../../../src/app/server';
-const request: SuperTest<Test> = supertest(app);
+import app from '../../../src/app/app';
+
+const request: SuperTest<Test> = supertest(app.getExpressInstance());
 
 describe('client controller: enpoints test', () => {
   it('POST should return created client and status code 200', async () => {
@@ -11,7 +12,7 @@ describe('client controller: enpoints test', () => {
     const { id, ...client } = response.body;
 
     expect(response.status).toBe(200);
-    expect(client).toBe({
+    expect(client).toStrictEqual({
       name: 'test',
       areaCode: '31',
       phoneNumber: '999999999',
