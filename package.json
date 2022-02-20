@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=development nodemon src/app/server.ts",
     "lint": "eslint . --ext .ts --fix",
-    "test": "jest --coverage --detectOpenHandles"
+    "test": "NODE_ENV=test jest --coverage --detectOpenHandles --forceExit"
   },
   "keywords": [],
   "author": "",
