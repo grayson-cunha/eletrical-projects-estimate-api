@@ -9,6 +9,7 @@ const dbPassword = process.env.DB_PASSWORD;
 const sequelizeConnection = new Sequelize(dbName, dbUser, dbPassword, {
   host: dbHost,
   dialect: dbDialect,
+  logging: process.env.NODE_ENV !== 'test',
 });
 
 export default sequelizeConnection;
