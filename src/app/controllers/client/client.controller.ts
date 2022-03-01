@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import Client, { ClientOuput } from '../../models/client';
+import Client, { ClientOutput } from '../../models/client';
 
 class ClientController {
   async create(req: Request, res: Response) {
-    const client: ClientOuput = await Client.create({
+    const client: ClientOutput = await Client.create({
       ...req.body,
     });
 

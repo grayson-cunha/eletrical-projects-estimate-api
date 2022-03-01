@@ -9,7 +9,7 @@ interface ClientAttributes {
 }
 
 export interface ClientInput extends Optional<ClientAttributes, 'id'> {}
-export interface ClientOuput extends Required<ClientAttributes> {}
+export interface ClientOutput extends Required<ClientAttributes> {}
 
 class Client
   extends Model<ClientAttributes, ClientInput>
