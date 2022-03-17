@@ -8,8 +8,7 @@ import { Server } from 'http';
 import helmet from 'helmet';
 import compression from 'compression';
 
-import sequelizeConnection from '../config/database';
-import initializeDatabaseTables from '../database';
+import Database from '../database';
 import routes from './routes';
 
 class App {
@@ -36,12 +35,12 @@ class App {
       console.log('App listening on port: ', process.env.PORT);
     }
 
-    initializeDatabaseTables();
+    await Database.connect();
   }
 
   async stop() {
     this.server.close();
-    await sequelizeConnection.close();
+    await Database.disconnect();
   }
 }
 
