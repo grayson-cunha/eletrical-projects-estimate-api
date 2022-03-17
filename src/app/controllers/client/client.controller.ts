@@ -1,11 +1,19 @@
 import { Request, Response } from 'express';
-import Client, { ClientOutput } from '../../models/client';
+import { ClientModel } from '../../models';
+
+interface CreateClientRequestBody {
+  name: string;
+  areaCode: string;
+  phoneNumber: string;
+}
 
 class ClientController {
   async create(req: Request, res: Response) {
-    const client: ClientOutput = await Client.create({
-      ...req.body,
-    });
+    const clientData = req.body as CreateClientRequestBody;
+
+    const clientModel = new ClientModel(clientData);
+
+    const client = await clientModel.save();
 
     return res.json(client);
   }
