@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { ClientModel } from '../../models';
 
-interface CreateClientRequestBody {
+interface ClientRequestBody {
   name: string;
   areaCode: string;
   phoneNumber: string;
@@ -9,7 +9,7 @@ interface CreateClientRequestBody {
 
 class ClientController {
   async create(req: Request, res: Response) {
-    const clientData = req.body as CreateClientRequestBody;
+    const clientData: ClientRequestBody = { ...req.body };
 
     const clientModel = new ClientModel(clientData);
 
