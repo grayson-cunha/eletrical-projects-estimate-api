@@ -1,8 +1,6 @@
-import { DataTypes, Model, Optional } from 'sequelize';
-import sequelizeConnection from '../../config/database';
+import { Document, Schema, model, Model } from 'mongoose';
 
-interface AddressAttributes {
-  id: number;
+export interface AddressDocument extends Document {
   address: string;
   address2: string;
   number: string;
@@ -13,69 +11,47 @@ interface AddressAttributes {
   country: string;
 }
 
-export interface AddressInput
-  extends Optional<AddressAttributes, 'id' | 'country'> {}
-export interface AddressOutput extends AddressAttributes {}
+export type TypeAddressModel = Model<AddressDocument>;
 
-class Address
-  extends Model<AddressAttributes, AddressInput>
-  implements AddressAttributes
-{
-  public id!: number;
-  public address!: string;
-  public address2!: string;
-  public number!: string;
-  public district!: string;
-  public city!: string;
-  public state!: string;
-  public cep!: string;
-  public country!: string;
-}
+export const addressSchema: Schema<AddressDocument> =
+  new Schema<AddressDocument>(
+    {
+      address: {
+        type: String,
+      },
+      address2: {
+        type: String,
+      },
+      number: {
+        type: String,
+      },
+      district: {
+        type: String,
+      },
+      city: {
+        type: String,
+        required: true,
+      },
+      state: {
+        type: String,
+        required: true,
+      },
+      cep: {
+        type: String,
+      },
+      country: {
+        type: String,
+        required: true,
+      },
+    },
+    {
+      timestamps: false,
+      versionKey: false,
+    }
+  );
 
-Address.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    address: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    address2: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    number: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    district: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    city: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    state: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    cep: {
-      type: DataTypes.STRING(9),
-      allowNull: false,
-    },
-    country: {
-      type: DataTypes.STRING,
-      defaultValue: 'Brasil',
-    },
-  },
-  {
-    timestamps: false,
-    sequelize: sequelizeConnection,
-  }
+export const AddressModel = model<AddressDocument, TypeAddressModel>(
+  'Address',
+  addressSchema,
+  'address'
 );
-
-export default Address;

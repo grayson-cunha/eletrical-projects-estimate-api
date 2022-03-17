@@ -1,11 +1,19 @@
-import Address from '../app/models/address';
-import Client from '../app/models/client';
+import mongoose from 'mongoose';
 
-const isDev = process.env.NODE_ENV === 'development';
+const connectedStateMongoose = 1;
 
-const initializeDatabaseTables = () => {
-  Address.sync({ alter: isDev, force: isDev });
-  Client.sync({ alter: isDev, force: isDev });
-};
+class Database {
+  async connect(): Promise<boolean> {
+    const dbUrl = process.env.DB_URL as string;
 
-export default initializeDatabaseTables;
+    await mongoose.connect(dbUrl);
+
+    return mongoose.connection.readyState === connectedStateMongoose;
+  }
+
+  async disconnect(): Promise<void> {
+    await mongoose.disconnect();
+  }
+}
+
+export default new Database();

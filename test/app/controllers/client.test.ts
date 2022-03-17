@@ -1,10 +1,14 @@
-import Client from '../../../src/app/models/client';
+import Database from '../../../src/database';
 import { testApi } from '../../test-request-helper';
 
 const clientEndpoint = '/clients';
 
 beforeAll(async () => {
-  await Client.sync({ force: true });
+  await Database.connect();
+});
+
+afterAll(async () => {
+  await Database.disconnect();
 });
 
 describe('client controller: enpoints test', () => {
