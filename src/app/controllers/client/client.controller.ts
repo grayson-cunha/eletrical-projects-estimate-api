@@ -9,13 +9,17 @@ interface ClientRequestBody {
 
 class ClientController {
   async create(req: Request, res: Response) {
-    const clientData: ClientRequestBody = { ...req.body };
+    try {
+      const clientData: ClientRequestBody = { ...req.body };
 
-    const clientModel = new ClientModel(clientData);
+      const clientModel = new ClientModel(clientData);
 
-    const client = await clientModel.save();
+      const client = await clientModel.save();
 
-    return res.json(client);
+      return res.json(client);
+    } catch (err: any) {
+      console.log(err.message);
+    }
   }
 }
 

@@ -1,10 +1,15 @@
-import Address from '../../../src/app/models/address';
+import { AddressModel } from '../../../src/app/models';
+import Database from '../../../src/database';
 import { testApi } from '../../test-request-helper';
 
 const addressEndpoint = '/addresses';
 
 beforeAll(async () => {
-  await Address.sync({ force: true });
+  await Database.connect();
+});
+
+afterAll(async () => {
+  await Database.disconnect();
 });
 
 describe('address controller: enpoints test', () => {
@@ -17,13 +22,14 @@ describe('address controller: enpoints test', () => {
       state: 'Minas Gerais',
       city: 'Belo Horizonte',
       cep: '30000000',
+      country: 'Brasil',
     }).post();
 
     expect(response.status).toBe(201);
   });
 
   it('GET should return get address and status code 200', async () => {
-    const address = await Address.create({
+    const address = await AddressModel.create({
       address: 'test',
       address2: 'APTO X',
       number: '2',
@@ -31,6 +37,7 @@ describe('address controller: enpoints test', () => {
       state: 'Minas Gerais',
       city: 'Belo Horizonte',
       cep: '30000000',
+      country: 'Brasil',
     });
 
     const response = await testApi(`${addressEndpoint}/${address.id}`).get();
@@ -39,7 +46,7 @@ describe('address controller: enpoints test', () => {
   });
 
   it('PUT should return updated address and status code 200', async () => {
-    const address = await Address.create({
+    const address = await AddressModel.create({
       address: 'test',
       address2: 'APTO X',
       number: '2',
@@ -47,6 +54,7 @@ describe('address controller: enpoints test', () => {
       state: 'Minas Gerais',
       city: 'Belo Horizonte',
       cep: '30000000',
+      country: 'Brasil',
     });
 
     const response = await testApi(`${addressEndpoint}/${address.id}`, {
@@ -58,7 +66,7 @@ describe('address controller: enpoints test', () => {
   });
 
   it('DELETE should return updated address and status code 200', async () => {
-    const address = await Address.create({
+    const address = await AddressModel.create({
       address: 'test',
       address2: 'APTO X',
       number: '2',
@@ -66,6 +74,7 @@ describe('address controller: enpoints test', () => {
       state: 'Minas Gerais',
       city: 'Belo Horizonte',
       cep: '30000000',
+      country: 'Brasil',
     });
 
     const response = await testApi(`${addressEndpoint}/${address.id}`).delete();
