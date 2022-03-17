@@ -1,49 +1,35 @@
-import { DataTypes, Model, Optional } from 'sequelize';
-import sequelizeConnection from '../../config/database';
+import { Document, Schema, model, Model } from 'mongoose';
 
-interface ClientAttributes {
-  id: number;
+export interface ClientDocument extends Document {
   name: string;
   areaCode: string;
-  phoneNumber?: string;
+  phoneNumber: string;
 }
 
-export interface ClientInput extends Optional<ClientAttributes, 'id'> {}
-export interface ClientOutput extends Required<ClientAttributes> {}
+export type TypeClientModel = Model<ClientDocument>;
 
-class Client
-  extends Model<ClientAttributes, ClientInput>
-  implements ClientAttributes
-{
-  public id!: number;
-  public name!: string;
-  public areaCode!: string;
-  public phoneNumber!: string;
-}
-
-Client.init(
+export const clientSchema: Schema<ClientDocument> = new Schema<ClientDocument>(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
     name: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: String,
+      required: true,
     },
     areaCode: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: String,
     },
     phoneNumber: {
-      type: DataTypes.TEXT,
+      type: String,
+      required: true,
     },
   },
   {
     timestamps: false,
-    sequelize: sequelizeConnection,
+    versionKey: false,
   }
 );
 
-export default Client;
+export const ClientModel = model<ClientDocument, TypeClientModel>(
+  'Client',
+  clientSchema,
+  'client'
+);
