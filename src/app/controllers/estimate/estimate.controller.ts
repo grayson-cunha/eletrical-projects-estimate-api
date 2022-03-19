@@ -22,7 +22,7 @@ class EstimateController {
 
     const estimate = await estimateModel.save();
 
-    return res.json(estimate);
+    return res.status(201).send(estimate);
   }
 
   async getById(req: Request, res: Response): Promise<Response> {
@@ -43,7 +43,10 @@ class EstimateController {
 
     const updatedEstimate = await EstimateModel.findByIdAndUpdate(
       id,
-      estimateUpdateData
+      estimateUpdateData,
+      {
+        new: true,
+      }
     );
 
     return res.status(200).send(updatedEstimate);
@@ -54,7 +57,7 @@ class EstimateController {
 
     await EstimateModel.findByIdAndRemove(id);
 
-    return res.status(204).send();
+    return res.status(200).send({ _id: id });
   }
 }
 

@@ -1,4 +1,5 @@
 import { Document, Schema, model, Model, ObjectId } from 'mongoose';
+import { productSchema } from './product';
 
 export interface ProductDocument extends Document {
   name: string;
@@ -27,19 +28,23 @@ export const estimateSchema: Schema<EstimateDocument> =
       },
       client: {
         type: String,
+        required: true,
       },
       products: {
-        type: [],
-        required: true,
+        type: [productSchema],
+        minlength: 1,
       },
       amount: {
         type: Number,
+        required: true,
       },
       startDate: {
         type: Date,
+        required: true,
       },
       endDate: {
         type: Date,
+        required: true,
       },
     },
     {
