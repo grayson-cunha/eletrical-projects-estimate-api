@@ -41,7 +41,10 @@ class AddressController {
 
     const updatedAddress = await AddressModel.findByIdAndUpdate(
       id,
-      addressUpdateData
+      addressUpdateData,
+      {
+        new: true,
+      }
     );
 
     return res.status(200).send(updatedAddress);
